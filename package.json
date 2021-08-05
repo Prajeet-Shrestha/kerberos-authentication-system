@@ -7,7 +7,8 @@
     "startDB": "nodemon DB/db.js",
     "startKerberos": "nodemon kerboros.js",
     "startAS": "nodemon AS/as.js",
-    "start_full_app": "concurrently \"npm run startDB\" \"npm run startKerberos\" \"npm run startAS\""
+    "startTGS": "nodemon TGS/tgs.js",
+    "start_full_app": "concurrently \"npm run startDB\" \"npm run startKerberos\" \"npm run startAS\" \"npm run startTGS\""
   },
   "author": "Prajeet Shrestha",
   "license": "ISC",

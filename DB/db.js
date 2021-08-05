@@ -9,6 +9,8 @@ var SHA256 = require('crypto-js/sha256');
 const fs = require('fs');
 const { randomUUID } = require('crypto');
 var jsonParser = bodyParser.json();
+// const fileAddress = '/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json';
+const fileAddress = 'user.json';
 
 app.post('/addUser', jsonParser, async (req, res, callback) => {
   console.log('------------------ADDING-----------------------');
@@ -21,7 +23,7 @@ app.post('/addUser', jsonParser, async (req, res, callback) => {
     uuid: req.query.email,
   };
   console.log(data);
-  var RFile = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+  var RFile = fs.readFileSync(fileAddress);
   var RFileData = JSON.parse(RFile);
   console.log(RFileData['users']);
   var userFound = {
@@ -40,19 +42,19 @@ app.post('/addUser', jsonParser, async (req, res, callback) => {
   if (userFound.status) {
     res.status(400).send({ error: 'already' });
   } else {
-    var file = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+    var file = fs.readFileSync(fileAddress);
     var FileData = JSON.parse(file);
     console.log(FileData);
     FileData['users'].push(data);
     var json = JSON.stringify(FileData);
-    var write = fs.writeFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json', json);
+    var write = fs.writeFileSync(fileAddress, json);
     res.status(200).send({ status: 'ok' });
   }
 });
 
 app.get('/getUser', async (req, res, callback) => {
   console.log(req.query.uuid);
-  var file = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+  var file = fs.readFileSync(fileAddress);
   var FileData = JSON.parse(file);
   console.log(FileData['users']);
   var userFound = {
@@ -74,7 +76,7 @@ app.get('/getUser', async (req, res, callback) => {
 });
 
 app.get('/allUser', async (req, res, callback) => {
-  var file = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+  var file = fs.readFileSync(fileAddress);
   var FileData = JSON.parse(file);
   console.log(FileData['users']);
   res.status(200).send(FileData['users']);
@@ -85,13 +87,13 @@ app.delete('/deleteAll', async (req, res, callback) => {
     users: [],
   };
   var json = JSON.stringify(FileData);
-  var write = fs.writeFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json', json);
+  var write = fs.writeFileSync(fileAddress, json);
   res.status(200).send('deleted');
 });
 
 app.get('/checkSessionAvailability', async (req, res, callback) => {
   console.log(req.query.uuid);
-  var file = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+  var file = fs.readFileSync(fileAddress);
   var FileData = JSON.parse(file);
   console.log(FileData['users']);
   var session = {
@@ -116,7 +118,7 @@ app.get('/checkSessionAvailability', async (req, res, callback) => {
 });
 
 app.put('/updateSession', async (req, res, callback) => {
-  var file = fs.readFileSync('/home/toothlexx/Github_linked_projects/Mini-Projects/kerboros/DB/user.json');
+  var file = fs.readFileSync(fileAddress);
   var FileData = JSON.parse(file);
   console.log(FileData['users']);
   var session = {

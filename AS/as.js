@@ -27,8 +27,9 @@ app.get('/auth', async (req, res) => {
   var TGT = {
     clientId: userCred.uuid,
     IP: '127.0. 0.1:3000',
-    timeStamp: new Date().getHours(),
+    timeStamp: new Date().getTime() / 1000,
     lifeTime: 5,
+    TGSSecretKey: '488bca4e-49b7-45b4-b8e0-3a9758669c6d',
     session1Key: uuid(),
   };
   FileData['users'].map((data, index) => {
@@ -49,7 +50,6 @@ app.get('/auth', async (req, res) => {
       }
     }
   });
-
   if (userFound.status) {
     if (userFound.isValid) {
       var encrypt = CryptoJS.AES.encrypt(JSON.stringify(TGT), userCred.hashKey).toString();

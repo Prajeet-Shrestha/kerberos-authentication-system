@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="http://localhost:3000/crypto"></script>
+    <!-- <link rel="stylesheet" href="./assets/login.css" /> -->
+    <style>
+      html,
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+          'Helvetica Neue', sans-serif;
+      }
+      #connectionSecured {
+        display: none;
+      }
+      #connectionSecured.show {
+        display: block;
+        align-items: center;
+        text-align: center;
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 4px;
+        width: fit-content;
+        background-color: lawngreen;
+      }
+      h3 {
+        text-align: center;
+        margin-top: 90px;
+        color: white;
+        font-size: 24px;
+        margin-bottom: 0px;
+      }
+      p.created {
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin-top: 1px;
+      }
+
+      .login-page {
+        display: none;
+        width: 360px;
+        padding: 0 0 0;
+        margin: auto;
+        margin-top: 40px;
+      }
+
+      .dataTable {
+        display: none;
+        padding: 0 0 0;
+        margin: 0 auto;
+        margin-top: 40px;
+      }
+
+      .login-page.show,
+      .dataTable.show {
+        display: block;
+      }
+
+      .form {
+        position: relative;
+        z-index: 1;
+        background: #ffffff;
+
+        max-width: 360px;
+        border-radius: 10px;
+        margin: 0 auto 100px;
+        padding: 28px 45px;
+        text-align: center;
+        margin-bottom: 0;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      }
+      .form input {
+        outline: 0;
+        background: #fcfcfc;
+        width: 100%;
+        color: rgb(50, 50, 50);
+        border: 0;
+        margin: 0 0 15px;
+        box-sizing: border-box;
+        font-size: 14px;
+        border-radius: 3px;
+        padding: 10px;
+        outline: none;
+        border: 1px solid #dadada;
+      }
+      .form .button {
+        font-weight: 600;
+        outline: 0;
+        background: #0074cd;
+        width: inherit;
+        border: 0;
+        padding: 15px;
+        color: #ffffff;
+        font-size: 14px;
+        -webkit-transition: all 0.3 ease;
+        transition: all 0.3 ease;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+      .form .button:hover,
+      .form .button:active,
+      .form .button:focus {
+        background: #0061ab;
+      }
+      .form .message {
+        margin: 15px 0 0;
+        color: #686868;
+        font-size: 12px;
+      }
+      .form .message a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+      .clearDB.hide {
+        display: none;
+      }
+      .clearDB {
+        display: block;
+        font-size: 12px;
+        color: red;
+        cursor: pointer;
+        width: fit-content;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .clearDB:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .container:before,
+      .container:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .container .info {
+        margin: 50px auto;
+        text-align: center;
+      }
+      .container .info h1 {
+        margin: 0 0 15px;
+        padding: 0;
+        font-size: 36px;
+        font-weight: 300;
+        color: #1a1a1a;
+      }
+      .container .info span {
+        color: #4d4d4d;
+        font-size: 12px;
+      }
+      .container .info span a {
+        color: #000000;
+        text-decoration: none;
+      }
+      .container .info span .fa {
+        color: #ef3b3a;
+      }
+
+      .form .register-form {
+        display: none;
+      }
+
+      .form .register-form.show,
+      .form .login-form.show {
+        display: initial;
+      }
+      .form .login-form {
+        display: none;
+      }
+
+      .label {
+        text-align: left;
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .clickable {
+        cursor: pointer;
+        color: #037ef3;
+      }
+      .error {
+        /* background-color: red; */
+        display: none;
+        font-size: 14px;
+        align-items: center;
+        width: fit-content;
+        padding-bottom: 10px;
+      }
+      .error.show {
+        display: flex;
+      }
+      .error svg {
+        color: #ff1c1c;
+        margin-right: 5px;
+      }
+      body {
+        background: #76b852; /* fallback for old browsers */
+        background: -webkit-linear-gradient(right, #76b852, #8dc26f);
+        background: -moz-linear-gradient(right, #76b852, #8dc26f);
+        background: -o-linear-gradient(right, #76b852, #8dc26f);
+        background: linear-gradient(to left, #76b852, #8dc26f);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #037ef3;
+      }
+
+      .tr {
+        display: flex;
+      }
+      .td {
+        width: 20%;
+
+        padding: 10px;
+      }
+      .th {
+        display: flex;
+        background: mediumblue;
+        color: white;
+      }
+      .tr {
+        background: #efefef;
+      }
+
+      .back {
+        cursor: pointer;
+        padding: 10px 15px;
+        color: #000;
+        width: fit-content;
+        border-radius: 3px;
+        background-color: rgb(82, 160, 4);
+        margin-bottom: 10px;
+      }
+
+      .green {
+        color: green;
+      }
+    </style>
+    <style>
+      /* width */
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      #logTable {
+        margin: 0 auto;
+        margin-top: 20px;
+        cursor: text;
+        padding: 5px;
+        border-radius: 3px;
+        white-space: initial;
+        width: 600px;
+        min-height: 200px;
+        max-height: 400px;
+        background-color: black;
+        color: greenyellow;
+      }
+
+      #AE-bodylog {
+        font-size: 14px;
+        overflow-y: scroll;
+        max-height: 400px;
+        min-height: 200px;
+      }
+      #AE-bodylog div {
+        width: 600px;
+        margin: 5px 0px;
+        word-wrap: break-word;
+      }
+    </style>
+    <link rel="icon" href="./assets/icon.svg" type="image/x-icon" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.js"
+      integrity="sha512-8WAv/Z7UaDv0U1DCJ3W1oul76HOvq2/9mc+IbOZGsTj9iwZnnCXL/0FS6GQKNR++krdfVn9kuAAQ6v2DqZ9uEQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      function logMessage(message) {
+        var logBlock = document.getElementById('AE-bodylog');
+        var log = logBlock.innerHTML.toString();
+        log += `<div>&gt;&gt; ${message}</div>`;
+        logBlock.innerHTML = log;
+      }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- <script src="./main.mjs"></script> -->
+    <script>
+      function toggleContainer(current) {
+        var loginForm = document.getElementById('login-form');
+        var dataTable = document.getElementById('dataTable');
+        var mainPage = document.getElementById('mainPage');
+
+        var registerForm = document.getElementById('register-form');
+        var username = document.getElementById('register-username');
+        var password = document.getElementById('register-password');
+        var email = document.getElementById('register-email');
+        var Lusername = document.getElementById('login-username');
+        var Lpassword = document.getElementById('login-password');
+        var Lerror = document.getElementById('login-error');
+        var error = document.getElementById('error');
+        error.classList.remove('show');
+        Lerror.classList.remove('show');
+        username.value = '';
+        password.value = '';
+        email.value = '';
+        Lusername.value = '';
+        Lpassword.value = '';
+        Lerror.value = '';
+        if (current == 'REGISTER') {
+          loginForm.classList.add('show');
+          mainPage.classList.add('show');
+
+          registerForm.classList.remove('show');
+          dataTable.classList.remove('show');
+        } else if (current == 'TABLE') {
+          showDB();
+          dataTable.classList.add('show');
+          mainPage.classList.remove('show');
+          loginForm.classList.remove('show');
+          registerForm.classList.remove('show');
+        } else {
+          registerForm.classList.add('show');
+          loginForm.classList.remove('show');
+          mainPage.classList.add('show');
+          dataTable.classList.remove('show');
+        }
+      }
+
+      function register() {
+        var username = document.getElementById('register-username');
+        var password = document.getElementById('register-password');
+        var email = document.getElementById('register-email');
+        var error = document.getElementById('error');
+        var DB = document.getElementById('clearDB');
+
+        const user = {
+          username: username.value,
+          password: sha256(password.value),
+          email: email.value,
+        };
+        console.log(user);
+        if (user.email.length >= 1 && user.password.length >= 1 && user.username.length >= 1) {
+          if (user.email.includes('@')) {
+            error.classList.remove('show');
+            $.ajax({
+              url: `http://127.0.0.1:2000/addUser?name=${user.username}&passwordHash=${user.password}&email=${user.email}`,
+              data: JSON.stringify({
+                name: user.username,
+                passwordHash: user.password,
+                email: user.email,
+              }),
+              contentType: 'application/json',
+
+              xhrFields: {
+                withCredentials: false,
+              },
+
+              success: function (data) {
+                console.log(data);
+                error.classList.add('show');
+                DB.classList.remove('hide');
+
+                error.innerHTML = successMessage('User created');
+                email.value = '';
+                username.value = '';
+                password.value = '';
+              },
+              error: function (err) {
+                console.log(err);
+                error.classList.add('show');
+                error.innerHTML = successMessage('User created');
+              },
+              dataType: 'json',
+              type: 'POST',
+            });
+          } else {
+            error.classList.add('show');
+            error.innerHTML = erroMessage('Invalid email address');
+          }
+        } else {
+          error.classList.add('show');
+          error.innerHTML = erroMessage('Empty form not allowed');
+        }
+      }
+
+      function erroMessage(msg) {
+        return `  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ff1c1c">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                />
+              </svg> ${msg}.`;
+      }
+
+      function successMessage(msg) {
+        return `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#4caf50"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> ${msg}.`;
+      }
+
+      function login() {
+        var username = document.getElementById('login-username');
+        var password = document.getElementById('login-password');
+        var error = document.getElementById('login-error');
+
+        const user = {
+          username: username.value,
+          password: sha256(password.value),
+        };
+
+        if (user.password.length >= 1 && user.username.length >= 1) {
+          console.log(user);
+          logMessage(`sending user id to TGT Server ${JSON.stringify(user)}`);
+          $.ajax({
+            url: `http://127.0.0.1:4000/auth?uuid=${user.username}&password=${user.password}`,
+            data: '',
+            success: function (data) {
+              // console.log(data.cipherCode);
+              var bytes = CryptoJS.AES.decrypt(data.cipherCode, user.password);
+              // console.log(bytes.toString(CryptoJS.enc.Utf8));
+              var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+              logMessage(`TGS Available for granting tickets`);
+              setTimeout(function () {
+                console.log(decryptedData);
+                logMessage(`cipher code received by client from TGT Server ${data.cipherCode}`);
+                logMessage(`Decrypting..`);
+                setTimeout(function () {
+                  logMessage(`${JSON.stringify(decryptedData)}`);
+                  logMessage(`Created Date: ${new Date(decryptedData.timeStamp * 1000)}`);
+                  logMessage(`LifeSpan: ${decryptedData.lifeTime} minutes`);
+                  console.log(decryptedData);
+                  var encJson = CryptoJS.AES.encrypt(
+                    JSON.stringify(decryptedData),
+                    decryptedData.TGSSecretKey
+                  ).toString();
+                  var encData = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encJson));
+                  console.log(encData);
+                  //encrpyting for TGS
+                  $.ajax({
+                    url: `http://127.0.0.1:5000/tgs?code=${encData}`,
+                    data: '',
+                    success: function (data) {
+                      console.log(data.cipherCode);
+                      logMessage(`Main Server Available for connection`);
+                      logMessage(`cipher code received by client from TGS Server ${data.cipherCode}`);
+                      logMessage(`Decrypting..`);
+                      setTimeout(function () {
+                        var bytes = CryptoJS.AES.decrypt(data.cipherCode, decryptedData.session1Key);
+                        var decryptedDataTGS = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                        console.log(decryptedDataTGS);
+                        logMessage(`${JSON.stringify(decryptedDataTGS)}`);
+                        logMessage(`Created Date: ${new Date(decryptedDataTGS.timeStamp * 1000)}`);
+                        logMessage(`LifeSpan: ${decryptedDataTGS.lifeTime} minutes`);
+                        logMessage(`Session key: ${decryptedDataTGS.session2Key} minutes`);
+                        var mainPage = document.getElementById('mainPage');
+                        var connect = document.getElementById('connectionSecured');
+                        var timeLifeInSec = decryptedDataTGS.lifeTime * 60;
+                        connect.classList.add('show');
+                        setInterval(function () {
+                          console.log(new Date().getTime() / 1000);
+                          console.log(decryptedDataTGS.timeStamp + timeLifeInSec);
+                          if (new Date().getTime() / 1000 >= decryptedDataTGS.timeStamp + timeLifeInSec) {
+                            window.location.replace(
+                              window.location.pathname + window.location.search + window.location.hash
+                            );
+                          }
+                          var connect = document.getElementById('connectionSecured');
+                          connect.innerHTML = ` <h4>Connection Line Network Secured using Kerboros!</h4>
+                          <h5> CurrentTime: ${new Date().toString()} </h5> 
+            <div><b> session Id:</b> ${decryptedDataTGS.session2Key}</div>
+            <div><b>CreatedDate:</b> ${new Date(decryptedDataTGS.timeStamp * 1000)}</div>
+            <div><b>ExpiryDate:</b> ${new Date((decryptedDataTGS.timeStamp + timeLifeInSec) * 1000)}</div>`;
+                        }, 1000);
+
+                        mainPage.classList.remove('show');
+                        logMessage(`_________Session In Progress_________`);
+                      }, 2000);
+                    },
+                    error: function (data) {
+                      logMessage(`TGS not available`);
+                      console.log(data);
+                      logMessage(`Authenticaion Failed.`);
+                    },
+                    dataType: 'json',
+                    type: 'GET',
+                  });
+                }, 1000);
+              }, 2000);
+            },
+            error: function (data) {
+              logMessage(`TGS not available for granting tickets`);
+              console.log(data);
+              logMessage(`Authenticaion Failed.`);
+            },
+            dataType: 'json',
+            type: 'GET',
+          });
+        } else {
+          logMessage(`empty request`);
+        }
+      }
+
+      function showDB() {
+        var tbody = document.getElementById('tbody');
+        const chec = localStorage.getItem('userlist');
+        var UserList = [];
+        $.ajax({
+          url: 'http://127.0.0.1:2000/allUser',
+          data: '',
+          success: function (data) {
+            console.log(data);
+            UserList = data;
+            embedableCode = '';
+            console.log(chec);
+            tbody.innerHTML = embedableCode;
+            if (UserList.length >= 1) {
+              console.log(UserList);
+              UserList.map((data) => {
+                embedableCode += returnFilledRow(data.name, data.passwordHash, data.email);
+              });
+              tbody.innerHTML = embedableCode;
+            }
+          },
+          dataType: 'json',
+          type: 'GET',
+        });
+      }
+
+      function returnFilledRow(userName, Password, email) {
+        return `<div class="tr">
+              <div class="td"> ${userName} </div>
+              <div class="td"> ${email}</div>
+              <div class="td"> ${Password} </div>
+            </div>`;
+      }
+    </script>
+    <title>Login Portal | SGC</title>
+  </head>
+  <body>
+    <h3>Student Group Circle</h3>
+    <p class="created">Created by Prajeet Shrestha</p>
+    <div id="connectionSecured"></div>
+    <div class="login-page show" id="mainPage">
+      <div class="form">
+        <form class="register-form" id="register-form">
+          <div class="label">Username</div>
+          <input type="text" id="register-username" />
+          <div class="label">Password</div>
+          <input type="password" id="register-password" />
+          <div class="label">Email address</div>
+          <input type="text" id="register-email" required />
+          <div class="error" id="error">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ff1c1c">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              />
+            </svg>
+            User already exits.
+          </div>
+          <div class="button" onclick="register()">Create account</div>
+          <p class="message" id="goToSignIn">
+            Already registered? <span class="clickable" onclick="toggleContainer('REGISTER')">Sign In</span>
+          </p>
+        </form>
+        <form class="login-form show" id="login-form">
+          <div class="label">Username</div>
+          <input type="text" id="login-username" />
+          <div class="label">Password</div>
+          <input type="password" id="login-password" />
+          <div class="error" id="login-error">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ff1c1c">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              />
+            </svg>
+            User already exits.
+          </div>
+          <div class="button" onclick="login()">login</div>
+          <p class="message">
+            Not registered? <span class="clickable" onclick="toggleContainer('LOGIN')">Create an account</span>
+          </p>
+        </form>
+        <div class="clearDB" onclick="clearDB()" id="clearDB">
+          <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 0 24 24" width="14px" fill="red">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+          </svg>
+          Clear Database
+        </div>
+        <div class="clearDB green" onclick="toggleContainer('TABLE')" id="clearDB">Show Database</div>
+      </div>
+    </div>
+    <div class="dataTable" id="dataTable">
+      <div onclick="toggleContainer('LOGIN')" class="back">< Back</div>
+      <div class="table">
+        <div class="th">
+          <div class="td">Username</div>
+          <div class="td">Email</div>
+          <div class="td">Password hash code (sha256)</div>
+        </div>
+        <div class="tbody" id="tbody"></div>
+      </div>
+    </div>
+    <div id="logTable">
+      <div id="AE-bodylog">
+        <div>>> running application on local server port 3000</div>
+        <!-- <div>>> user Creds Sent to Ticket Granting Ticket Server ...</div>
+        <div>>> authenticating in local server port 4000 ...</div>
+        <div>
+          >> cipher code received by client from TGT Server
+          U2FsdGVkX1/F30+UnTczS9jlmfzkvzpPW1nL29sMri86P22gaLhCUgvNG3nuXrCFTYpNhFycHfHbB+8Ikdyabe6CkAWeOQQfLI+Z66JkCI51JkbCZ0gozaykNG+jNngRK5JXq/Ke2oRNbsk8M9/cQnUtr0dC5gt9EDJLOZrVqDwPPBI0awSa7KFylXEZ6efljEHO0RKWjnNOrvh+IvlflkNh+ZVJ9ICLbXHi0wwwAIs=
+        </div>
+        <div>>> sending the code to Ticket granting service server ...</div>
+        <div>
+          >> cipher code received by client from TGT Server
+          U2FsdGVkX1/F30+UnTczS9jlmfzkvzpPW1nL29sMri86P22gaLhCUgvNG3nuXrCFTYpNhFycHfHbB+8Ikdyabe6CkAWeOQQfLI+Z66JkCI51JkbCZ0gozaykNG+jNngRK5JXq/Ke2oRNbsk8M9/cQnUtr0dC5gt9EDJLOZrVqDwPPBI0awSa7KFylXEZ6efljEHO0RKWjnNOrvh+IvlflkNh+ZVJ9ICLbXHi0wwwAIs=
+        </div> -->
+      </div>
+    </div>
+    <!-- <script src="./assets/checkDB.js"></script> -->
+    <script>
+      var DB = document.getElementById('clearDB');
+
+      try {
+        const chec = localStorage.getItem('userlist');
+        if (chec === null) {
+          DB.classList.add('hide');
+        }
+      } catch (e) {
+        DB.classList.add('hide');
+      }
+
+      function clearDB() {
+        var DB = document.getElementById('clearDB');
+        var error = document.getElementById('error');
+
+        try {
+          error.classList.remove('show');
+        } catch (e) {}
+        window.localStorage.clear();
+        DB.classList.add('hide');
+      }
+    </script>
+  </body>
+</html>
