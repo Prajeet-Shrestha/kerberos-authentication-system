@@ -1,0 +1,11 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "A principals database of secret keys for all the users and services that it maintains",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Prajeet Shrestha",
+  "license": "ISC"
+}

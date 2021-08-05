@@ -1,0 +1,24 @@
+{
+  "name": "kerboros",
+  "version": "1.0.0",
+  "description": "Kerberos is a computer-network authentication protocol that works on the basis of tickets to allow nodes communicating over a non-secure network to prove their identity to one another in a secure manner.",
+  "main": "kerboros.js",
+  "scripts": {
+    "startDB": "nodemon DB/db.js",
+    "startKerberos": "nodemon kerboros.js",
+    "startAS": "nodemon AS/as.js",
+    "start_full_app": "concurrently \"npm run startDB\" \"npm run startKerberos\" \"npm run startAS\""
+  },
+  "author": "Prajeet Shrestha",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^6.2.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "nodemon": "^2.0.12",
+    "uuidv4": "^6.2.11"
+  }
+}
