@@ -7,8 +7,9 @@ users' identities.
 
 ### Some Information about the project:
 1. The following project is a prototype authentication model that uses hashing algorithm known as SHA256 to hash the password. 
-2. I have used local storage of the browser to storage the data as an array of objects.
+2. I have use json file to store users data locally using node file handling methods. 
 3. The project also has the feature to see the data stored in a table form. 
+4. Please note that the project is a simulation of how kerberos system works and is only for education puposes. 
 
 ### :gear: How to run locally on your machine
 There are two ways to run the application locally on your machine. The instructions are
