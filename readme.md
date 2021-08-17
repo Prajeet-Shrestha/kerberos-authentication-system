@@ -45,7 +45,7 @@ b. For Linux user, you can get it from sudo apt install docker.io
       docker run it -p 6000:3000 kerberos
 5. You can find the application hosting on your http://localhost:3000/ or http://localhost:6000/
 
-Created & designed by Prajeet Shrestha
-Computer Science Batch 2017 
-prajeet.shrestha.biz@gmail.com 
-9810442111
+## Created & designed by Prajeet Shrestha
+### Computer Science Batch 2017 
+#### prajeet.shrestha.biz@gmail.com 
+##### 9810442111
