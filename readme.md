@@ -4,8 +4,7 @@ or more trusted hosts across an untrusted network, like the internet. It uses se
 cryptography and a trusted third party for authenticating client-server applications and verifying
 users' identities.
 
-[![image](https://www.linkpicture.com/q/Screenshot-from-2021-08-05-19-23-46.png)](https://www.linkpicture.com/view.php?img=LPic611b54770fdd21936206344)
-
+![alt text](https://www.linkpicture.com/q/Screenshot-from-2021-08-05-19-23-46.png)
 
 ### Some Information about the project:
 1. The following project is a prototype authentication model that uses hashing algorithm known as SHA256 to hash the password. 
